@@ -1,0 +1,78 @@
+/* SkillSwap - core styles (responsive + modern dashboard) */
+:root{
+	--bg:#f6f8fb;
+	--card:#ffffff;
+	--muted:#6b7280;
+	--accent:#2563eb;
+	--accent-2:#10b981;
+	--radius:12px;
+	--max-width:1100px;
+	--gap:16px;
+	font-family: Inter, Roboto, system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);color:#111}
+body{line-height:1.45;-webkit-font-smoothing:antialiased}
+
+/* Container */
+.container{max-width:var(--max-width);margin:0 auto;padding:24px}
+
+/* Header */
+header{background:linear-gradient(90deg,#fff, #fbfdff);padding:18px 24px;border-bottom:1px solid rgba(16,24,40,0.04);display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:1.25rem}
+
+/* Controls area */
+.controls, header > div{display:flex;gap:12px;align-items:center}
+
+/* Buttons */
+.btn{display:inline-block;padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+.btn.alt{background:var(--accent-2)}
+.btn.danger{background:#ef4444}
+.btn:active{transform:translateY(1px)}
+
+/* Cards and sections */
+.card{background:var(--card);border-radius:var(--radius);padding:12px;box-shadow:0 6px 18px rgba(13,38,59,0.04);border:1px solid rgba(13,38,59,0.03)}
+section{margin:18px 0}
+section h2{margin:0 0 10px 0;font-size:1.1rem}
+
+/* Forms */
+input[type="text"],input[type="email"],input[type="search"],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;background:#fff}
+form{display:flex;flex-direction:column;gap:10px}
+form.inline{flex-direction:row;align-items:center}
+
+/* Search results */
+#results, #requests-list, #skills-list{display:flex;flex-direction:column;gap:10px}
+
+/* Dashboard layout */
+main{display:grid;grid-template-columns:1fr 360px;gap:var(--gap);padding:24px;max-width:var(--max-width);margin:0 auto}
+main > section{background:transparent}
+
+@media (max-width:900px){
+	main{grid-template-columns:1fr;padding:16px}
+	header{padding:12px}
+}
+
+/* Small tweaks for the public pages */
+footer{padding:18px;text-align:center;color:var(--muted);font-size:0.9rem}
+
+/* Tiny utilities */
+.muted{color:var(--muted)}
+.flex{display:flex;gap:10px;align-items:center}
+
+/* Mobile-friendly buttons inside cards */
+.card .btn{padding:6px 8px;border-radius:6px}
+
+/* Improve table-like lists */
+.list-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+
+/* Make images and videos responsive */
+img,video{max-width:100%;height:auto;border-radius:8px}
+
+/* Accessibility focus */
+:focus{outline:3px solid rgba(37,99,235,0.15);outline-offset:2px}
+
+/* Specific tweaks for dashboards (fallback if inline styles exist) */
+#skill-search{max-width:420px}
+#search-btn{min-width:90px}
+

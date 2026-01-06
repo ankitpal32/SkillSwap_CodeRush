@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>SkillSwap</title>
+</head>
+<body>
+    <style>
+      /* small page-specific tweaks that build on css/style.css */
+      .navbar {display:flex;align-items:center;justify-content:space-between;padding:12px 24px;border-bottom:1px solid rgba(0,0,0,0.06);background:#fff}
+      .logo span{font-size:22px;font-weight:700;color:var(--accent-2)}
+      .search-hero{display:flex;flex-direction:column;gap:14px;padding:28px;background:linear-gradient(90deg,#f7fbfd,#ffffff);border-bottom:1px solid rgba(0,0,0,0.02)}
+      .hero-search{display:flex;gap:8px;max-width:900px;margin:0 auto;width:100%}
+      .hero-search input{flex:1;padding:14px 16px;border-radius:10px;border:1px solid #e6eaf0}
+      .hero-search button{padding:12px 18px;border-radius:10px;background:var(--accent);color:#fff;border:none}
+      .nav-right{display:flex;align-items:center;gap:12px}
+      .dash-links{display:flex;gap:8px}
+      .rec-row{display:flex;gap:16px;flex-wrap:wrap;padding:20px}
+      .skill-card{min-width:220px;border-radius:10px;overflow:hidden;border:1px solid #eaecef;background:#fff;padding:12px}
+    </style>
+    <nav class="navbar">
+      <div class="logo"><span>SkillSwap</span></div>
+      <div class="dash-links">
+        <a class="btn" href="dasboard1.html">Student Dashboard</a>
+        <a class="btn alt" href="dasboard2.html">Teacher Dashboard</a>
+      </div>
+      <div class="nav-right">
+        <i class="far fa-envelope"></i>
+        <img src="https://i.pravatar.cc/35" alt="profile" class="profile">
+      </div>
+    </nav>
+
+    <section class="search-hero">
+      <div class="container">
+        <h1 style="text-align:center;margin:0;font-size:1.6rem">Find trusted teachers and mentors</h1>
+        <p class="muted" style="text-align:center;margin:6px 0 12px">Search skills, compare profiles, and request sessions — like a lightweight Fiverr for skill swapping.</p>
+        <div class="hero-search">
+          <input id="main-search" type="search" placeholder="Search for design, programming, marketing...">
+          <button id="main-search-btn"><i class="fas fa-search"></i> Search</button>
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <section style="flex:2">
+        <h2>Recommended</h2>
+        <div class="rec-row" id="rec-row">
+          <div class="skill-card card">
+            <h3>Frontend Development</h3>
+            <p class="muted">React, Vue, HTML, CSS</p>
+          </div>
+          <div class="skill-card card">
+            <h3>Graphic Design</h3>
+            <p class="muted">Photoshop, Illustrator</p>
+          </div>
+          <div class="skill-card card">
+            <h3>Data Science</h3>
+            <p class="muted">Python, Machine Learning</p>
+          </div>
+        </div>
+      </section>
+
+      <aside style="flex:1">
+        <div class="card">
+          <h3>Your quick actions</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+            <a class="btn" href="dasboard1.html">Go to Student Dashboard</a>
+            <a class="btn alt" href="dasboard2.html">Go to Teacher Dashboard</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <script>
+      // Redirect search to the student dashboard and include query param
+      document.getElementById('main-search-btn').addEventListener('click', ()=>{
+        const q = encodeURIComponent(document.getElementById('main-search').value.trim());
+        window.location.href = 'dasboard1.html' + (q ? '?q=' + q : '');
+      });
+      document.getElementById('main-search').addEventListener('keydown',(e)=>{
+        if(e.key === 'Enter'){ e.preventDefault(); document.getElementById('main-search-btn').click(); }
+      });
+    </script>
+</body>
+</html>

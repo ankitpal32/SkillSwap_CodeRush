@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Teacher Dashboard - SkillSwap</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../js/dashboard.js" defer></script>
+	<style>
+		.card{border:1px solid #ddd;padding:12px;margin:8px 0;border-radius:6px}
+		.btn{padding:6px 10px;border:none;background:#2b7;cursor:pointer;border-radius:4px}
+		.btn.danger{background:#e44;color:#fff}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Teacher Dashboard</h1>
+		<div>
+			<a href="dasboard1.html" class="btn">Back to Student Dashboard</a>
+			<span id="teacher-user">Not signed in</span>
+			<button id="logout-btn" class="btn" style="background:#ef4444">Logout</button>
+		</div>
+	</header>
+
+	<main>
+		<section>
+			<h2>Pending Requests</h2>
+			<div id="requests-list"></div>
+		</section>
+
+		<section>
+			<h2>Your Skills</h2>
+			<div id="skills-list"></div>
+			<form id="add-skill-form">
+				<input id="new-skill" placeholder="New skill name" required />
+				<button class="btn" type="submit">Add Skill</button>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2026 SkillSwap</p>
+	</footer>
+</body>
+	<script type="module">
+		import { auth } from '../js/firebase.js';
+		import { logout } from '../js/auth.js';
+		import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+		onAuthStateChanged(auth, (user) => {
+			const demoCurrent = JSON.parse(localStorage.getItem('ss_current_v1') || 'null');
+			if (!user && !demoCurrent) {
+				window.location.href = 'login system.html';
+				return;
+			}
+			if (user) {
+				const el = document.getElementById('teacher-user');
+				if (el) el.textContent = user.displayName || user.email || 'Signed in';
+			}
+		});
+
+		document.getElementById('logout-btn').addEventListener('click', async () => {
+			try {
+				localStorage.removeItem('ss_current_v1');
+				await logout();
+			} catch (e) {
+			} finally {
+				window.location.href = 'login system.html';
+			}
+		});
+	</script>
+</html>
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Student Dashboard - SkillSwap</title>
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../js/dashboard.js" defer></script>
+	<style>
+		.controls{display:flex;gap:8px;align-items:center}
+		.card{border:1px solid #ddd;padding:12px;margin:8px 0;border-radius:6px}
+		.btn{padding:6px 10px;border:none;background:#2b7;cursor:pointer;border-radius:4px}
+		.btn.alt{background:#49f;color:#fff}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Student Dashboard</h1>
+		<div class="controls">
+			<button id="switch-to-teacher" class="btn alt">Switch to Teacher Dashboard</button>
+			<div id="current-user">Not signed in</div>
+			<button id="logout-btn" class="btn" style="background:#ef4444">Logout</button>
+		</div>
+	</header>
+
+	<main>
+		<section>
+			<h2>Find Teachers by Skill</h2>
+			<div>
+				<input id="skill-search" placeholder="e.g. JavaScript, Photoshop" />
+				<button id="search-btn" class="btn">Search</button>
+			</div>
+			<div id="results"></div>
+		</section>
+
+		<section>
+			<h2>Sign in (demo)</h2>
+			<p>This dashboard uses a simple demo sign-in to set the current user (no auth). If you have Firebase auth, the user will still work but this is a local fallback for demo purposes.</p>
+			<form id="signin-form">
+				<input id="signin-name" placeholder="Your name" required />
+				<select id="signin-role">
+					<option value="student">Student</option>
+					<option value="teacher">Teacher</option>
+				</select>
+				<button class="btn" type="submit">Sign in</button>
+			</form>
+		</section>
+	</main>
+
+	<footer>
+		<p>&copy; 2026 SkillSwap</p>
+	</footer>
+</body>
+	<script type="module">
+		import { auth } from '../js/firebase.js';
+		import { logout } from '../js/auth.js';
+		import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+		// Redirect to login if not authenticated
+		onAuthStateChanged(auth, (user) => {
+			const demoCurrent = JSON.parse(localStorage.getItem('ss_current_v1') || 'null');
+			if (!user && !demoCurrent) {
+				// no firebase user and no demo user → send to login
+				window.location.href = 'login system.html';
+				return;
+			}
+			// if firebase user present, show name
+			if (user) {
+				const el = document.getElementById('current-user');
+				if (el) el.textContent = user.displayName || user.email || 'Signed in';
+			}
+		});
+
+		document.getElementById('logout-btn').addEventListener('click', async () => {
+			try {
+				// clear demo current
+				localStorage.removeItem('ss_current_v1');
+				// attempt firebase logout if available
+				await logout();
+			} catch (e) {
+				// ignore if logout not available
+			} finally {
+				window.location.href = 'login system.html';
+			}
+		});
+	</script>
+</html>
+
