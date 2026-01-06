@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SkillSwap | Login & Sign Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* LEFT SECTION */
+.left {
+    flex: 1;
+    background: linear-gradient(
+        rgba(122, 31, 61, 0.9),
+        rgba(122, 31, 61, 0.9)
+    ),
+    url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 60px;
+}
+
+.left h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.left h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+.left ul {
+    list-style: none;
+    font-size: 18px;
+}
+
+.left li {
+    margin-bottom: 15px;
+}
+
+/* RIGHT SECTION */
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 30px;
+}
+
+.box {
+    width: 100%;
+    max-width: 380px;
+}
+
+/* FORMS */
+.form {
+    display: none;
+}
+
+#login {
+    display: block;
+}
+
+#signup:target {
+    display: block;
+}
+
+#signup:target ~ #login {
+    display: none;
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* BUTTONS */
+.btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    background: #1dbf73;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #17a864;
+}
+
+/* TEXT */
+h3 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.switch {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.switch a {
+    color: #1dbf73;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.note {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+}
+
+.terms {
+    font-size: 12px;
+    margin-top: 15px;
+    color: #555;
+    text-align: center;
+}
+
+.terms a {
+    color: #1dbf73;
+    text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .left {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- LEFT -->
+    <div class="left">
+        <h1>SkillSwap</h1>
+        <h2>Success starts here</h2>
+        <ul>
+            <li>✔ Over 700 categories</li>
+            <li>✔ Quality work done faster</li>
+            <li>✔ Access to global talent</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <div class="box">
+
+            <!-- SIGN UP -->
+            <form id="signup" class="form">
+                <h3>Create your SkillSwap account</h3>
+
+                <p class="switch">
+                    Already have an account?
+                    <a href="#login">Login</a>
+                </p>
+
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+
+                <button class="btn">Sign Up</button>
+
+                <p class="note">
+                    A verification link will be sent to your email.
+                </p>
+
+                <p class="terms">
+                    By joining, you agree to SkillSwap
+                    <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
+                </p>
+            </form>
+
+            <!-- LOGIN -->
+            <form id="login" class="form">
+                <h3>Sign in to your account</h3>
+
+                <p class="switch">
+                    Don’t have an account?
+                    <a href="#signup">Sign Up </a>
+                </p>
+
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+
+                <button class="btn">Login</button>
+
+                <p class="terms">
+                    By continuing, you agree to SkillSwap
+                    <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
