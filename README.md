@@ -1,21 +1,21 @@
-# 🤝 Local Skill Exchange (No Money System)
+#  Local Skill Exchange (No Money System)
 
 A community-driven web platform where people exchange skills using **time instead of money**.
 
 ---
 
-## 🚀 Project Idea
+##  Project Idea
 
 Many people have useful skills but cannot afford paid services. At the same time, many people need help but lack money.
 
 **Local Skill Exchange** solves this problem by allowing users to trade skills using **hour-based credits**, creating a fair and inclusive system.
 
-> ⏱️ 1 hour of any skill = 1 credit  
-> 💸 No money involved
+>  1 hour of any skill = 1 credit  
+>  No money involved
 
 ---
 
-## ❌ Problem Statement
+##  Problem Statement
 
 - Skilled people lack income opportunities
 - Learners cannot afford services
@@ -24,7 +24,7 @@ Many people have useful skills but cannot afford paid services. At the same time
 
 ---
 
-## 💡 Solution
+##  Solution
 
 A **web-based skill exchange platform** where:
 - Users offer their skills
@@ -34,7 +34,7 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🔧 How It Works
+##  How It Works
 
 1. User signs up and creates a profile
 2. Adds:
@@ -46,14 +46,14 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🎯 Example
+##  Example
 "I design posters for 1 hour"
 ↔
 "You teach me guitar for 1 hour"
 
 ---
 
-## 🛠️ Features (MVP)
+##  Features (MVP)
 
 - User authentication
 - Skill listing (offer & request)
@@ -64,7 +64,7 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🏆 Why This Project Stands Out
+##  Why This Project Stands Out
 
 - ✅ No money = no scams
 - ✅ Fair system (time is equal for all)
@@ -74,7 +74,7 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 👥 Target Users
+##  Target Users
 
 - Students
 - Freelancers
@@ -84,7 +84,7 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🧑‍💻 Tech Stack
+##  Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript  
 - **Backend (optional):** Firebase / Node.js  
@@ -92,7 +92,7 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 - AI-based skill matching
 - Mobile app version
@@ -102,13 +102,13 @@ A **web-based skill exchange platform** where:
 
 ---
 
-## 🧠 One-Line Pitch
+##  One-Line Pitch
 
 > A platform where people exchange skills using time instead of money.
 
 ---
 
-## 📌 Hackathon Note
+##  Hackathon Note
 
 This project was built as an MVP during a hackathon to demonstrate a **simple, scalable, and socially impactful solution**.
 
