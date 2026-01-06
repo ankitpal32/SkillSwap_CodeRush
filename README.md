@@ -114,7 +114,7 @@ This project was built as an MVP during a hackathon to demonstrate a **simple, s
 
 ---
 
-## 📜 License
+##  License
 
 This project is open-source and free to use for learning and development.
 
