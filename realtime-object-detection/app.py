@@ -1,4 +1,5 @@
 import os
+import threading
 import cv2
 import numpy as np
 from flask import Flask, jsonify, render_template, request
@@ -11,23 +12,37 @@ NAMES = os.path.join(MODEL_DIR, "coco.names")
 net = None
 classes = []
 output_layers = []
+model_lock = threading.Lock()
+
 
 def load_model():
     global net, classes, output_layers
     if net is not None:
         return
-    if not all(os.path.exists(p) for p in (CFG, WEIGHTS, NAMES)):
-        raise RuntimeError("YOLO model files are missing")
-    with open(NAMES, encoding="utf-8") as f:
-        classes = [x.strip() for x in f if x.strip()]
-    net = cv2.dnn.readNetFromDarknet(CFG, WEIGHTS)
-    layer_names = net.getLayerNames()
-    out = np.asarray(net.getUnconnectedOutLayers()).flatten()
-    output_layers = [layer_names[int(i) - 1] for i in out]
+    with model_lock:
+        if net is not None:
+            return
+        missing = [p for p in (CFG, WEIGHTS, NAMES) if not os.path.exists(p)]
+        if missing:
+            raise RuntimeError("YOLO model files are missing: " + ", ".join(os.path.basename(p) for p in missing))
+        with open(NAMES, encoding="utf-8") as f:
+            classes = [x.strip() for x in f if x.strip()]
+        net = cv2.dnn.readNetFromDarknet(CFG, WEIGHTS)
+        layer_names = net.getLayerNames()
+        out = np.asarray(net.getUnconnectedOutLayers()).flatten()
+        output_layers = [layer_names[int(i) - 1] for i in out]
+
+
+@app.errorhandler(Exception)
+def handle_exception(exc):
+    app.logger.exception("Unhandled request error")
+    return jsonify(error=str(exc), type=exc.__class__.__name__), 500
+
 
 @app.get("/")
 def index():
     return render_template("index.html")
+
 
 @app.get("/health")
 def health():
@@ -36,6 +51,7 @@ def health():
         return jsonify(status="ok", model="yolov4-tiny")
     except Exception as exc:
         return jsonify(status="error", error=str(exc)), 500
+
 
 @app.post("/detect")
 def detect():
@@ -51,8 +67,10 @@ def detect():
         image = cv2.resize(image, (640, int(image.shape[0] * scale)))
     h, w = image.shape[:2]
     blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416), swapRB=True, crop=False)
-    net.setInput(blob)
-    outputs = net.forward(output_layers)
+    # OpenCV DNN inference is protected because the service uses a single model instance.
+    with model_lock:
+        net.setInput(blob)
+        outputs = net.forward(output_layers)
     boxes, confidences, class_ids = [], [], []
     for output in outputs:
         for detection in output:
@@ -61,7 +79,7 @@ def detect():
             confidence = float(scores[class_id])
             if confidence >= 0.35:
                 cx, cy, bw, bh = detection[:4] * np.array([w, h, w, h])
-                boxes.append([int(cx - bw/2), int(cy - bh/2), int(bw), int(bh)])
+                boxes.append([int(cx - bw / 2), int(cy - bh / 2), int(bw), int(bh)])
                 confidences.append(confidence)
                 class_ids.append(class_id)
     indices = cv2.dnn.NMSBoxes(boxes, confidences, 0.35, 0.40)
@@ -70,8 +88,14 @@ def detect():
         for idx in np.asarray(indices).flatten():
             idx = int(idx)
             x, y, bw, bh = boxes[idx]
-            detections.append({"label": classes[class_ids[idx]], "confidence": round(confidences[idx], 3), "x": max(0,x), "y": max(0,y), "width": max(0,bw), "height": max(0,bh)})
+            detections.append({
+                "label": classes[class_ids[idx]],
+                "confidence": round(confidences[idx], 3),
+                "x": max(0, x), "y": max(0, y),
+                "width": max(0, bw), "height": max(0, bh)
+            })
     return jsonify(width=w, height=h, detections=detections)
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
